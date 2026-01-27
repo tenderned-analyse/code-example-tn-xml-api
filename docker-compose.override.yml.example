@@ -1,0 +1,25 @@
+# docker-compose.override.yml.example
+#
+# This file shows how to override the default command to run different scripts
+# Copy this to docker-compose.override.yml to use it
+#
+# Example usage:
+#   cp docker-compose.override.yml.example docker-compose.override.yml
+#   docker-compose up
+
+services:
+  tenderned-xml-api:
+    # Uncomment one of the following to change which script runs:
+    
+    # Run XML API (limited availability)
+    # command: ["python", "tenderned_xml_api_example.py"]
+    
+    # Run JSON API (default, already set in Dockerfile)
+    # command: ["python", "tenderned_json_api_example.py"]
+    
+    # Run with the runner script
+    # command: ["python", "run.py", "--json"]
+    # command: ["python", "run.py", "--xml"]
+    
+    # Keep container running for debugging
+    # command: ["sleep", "infinity"]

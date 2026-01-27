@@ -1,0 +1,39 @@
+name: Docker Compose Test
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  docker-compose-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Create .env file
+        run: |
+          cp .env.dist .env
+          # Add dummy credentials for testing
+          echo "API_USERNAME=test_user" >> .env
+          echo "API_PASSWORD=test_password" >> .env
+      
+      - name: Build with docker-compose
+        run: docker-compose build
+      
+      - name: Verify docker-compose configuration
+        run: docker-compose config
+      
+      - name: Test container startup (dry run)
+        run: |
+          # This will build and verify the container can start
+          # but won't actually run the API call since we don't have real credentials
+          docker-compose up --no-start
+          docker-compose ps -a
+      
+      - name: Clean up
+        if: always()
+        run: docker-compose down -v

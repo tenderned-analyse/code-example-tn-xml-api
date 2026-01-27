@@ -1,0 +1,9 @@
+services:
+  tenderned-xml-api:
+    build: .
+    # Zet je credentials in ./.env (niet committen)
+    env_file:
+      - .env
+    # Optioneel: als het script iets wegschrijft, map output naar je host
+    # volumes:
+    #   - ./output:/app/output
